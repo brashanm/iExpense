@@ -30,12 +30,22 @@ struct AddView: View {
                     .keyboardType(.decimalPad)
             }
             .navigationTitle("Add new expense")
+            .navigationBarBackButtonHidden()
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        let item = ExpenseItem(name: name, type: type, amount: amount)
+                        let item = Item(name: name, type: type, amount: amount)
                         expenses.items.append(item)
                         dismiss()
+                    }
+                    .disabled(name == "" || amount == 0.0)
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .foregroundStyle(.red)
                     }
                 }
             }
